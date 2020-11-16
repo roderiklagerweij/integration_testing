@@ -10,6 +10,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 sealed class LoginViewState() {
     object InvalidInputData : LoginViewState()
@@ -17,7 +18,7 @@ sealed class LoginViewState() {
     object LoginFailed : LoginViewState()
 }
 
-class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
 
     var usernameText : String = ""
     var passwordText : String = ""

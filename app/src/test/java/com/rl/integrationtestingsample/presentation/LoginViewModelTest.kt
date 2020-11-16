@@ -13,17 +13,14 @@ import javax.inject.Inject
 class LoginViewModelTest : BaseIntegrationTest() {
 
     @Inject
-    lateinit var loginUseCase: LoginUseCase
-    @Inject
     lateinit var inMemorySharedPreferences : SharedPreferences
 
-    lateinit var viewModel: LoginViewModel
+    @Inject lateinit var viewModel: LoginViewModel
     lateinit var stateObserver : TestObserver<LoginViewState>
 
     @Before
     fun beforeTest() {
         applicationComponent.inject(this)
-        viewModel = LoginViewModel(loginUseCase)
         stateObserver = viewModel.viewStateObservable.testObserver()
     }
 

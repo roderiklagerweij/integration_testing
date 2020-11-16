@@ -3,14 +3,12 @@ package com.rl.integrationtestingsample.presentation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.rl.integrationtestingsample.R
 import com.rl.integrationtestingsample.databinding.MainFragmentBinding
 import com.rl.integrationtestingsample.di.DaggerApplicationComponent
-import com.rl.integrationtestingsample.domain.usecase.LoginUseCase
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
@@ -20,16 +18,13 @@ class LoginFragment : Fragment(R.layout.main_fragment) {
         fun newInstance() = LoginFragment()
     }
 
-    @Inject
-    lateinit var loginUseCase : LoginUseCase
-    private lateinit var viewModel: LoginViewModel
+    @Inject lateinit var viewModel: LoginViewModel
 
     @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         DaggerApplicationComponent.builder().application(requireActivity().application).build().inject(this)
-        viewModel = LoginViewModel(loginUseCase)
 
         val binding = MainFragmentBinding.bind(view)
         with (binding) {
@@ -67,7 +62,6 @@ class LoginFragment : Fragment(R.layout.main_fragment) {
 
             viewModel.viewStateObservable.observe(viewLifecycleOwner, { state ->
                 validationError.visibility = View.GONE
-                Log.d("Test", "State ${state}")
                 when(state) {
                     LoginViewState.InvalidInputData -> {
                         validationError.visibility = View.VISIBLE
